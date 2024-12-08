@@ -89,20 +89,6 @@ def test_profiler_knows_which_snippet_uses_less_memory():
     
     assert profiler.is_more_memory_efficient_than(memory_efficient, memory_inefficient, df_numeric, verbose=True)
 
-@mark.skip("META")
-def test_pickling_vs_copying():
-    profiler = CodeProfiler()
-    large_df = generator.generate_large_df()
-
-    serialized = pickle.dumps(large_df)
-    
-    def pickling(df):
-        return pickle.loads(serialized)
-    
-    def copying(df):
-        return df.copy(deep=False)
-
-    assert profiler.is_faster_than(copying, pickling, large_df, verbose=True, num_iterations=10)
 
 if __name__ == '__main__':
     test_profiler_chooses_correct_snippet()

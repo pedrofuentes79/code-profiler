@@ -1,4 +1,4 @@
-from time import perf_counter
+from time import perf_counter as time_counter
 from memory_profiler import memory_usage
 import numpy as np
 import pandas as pd
@@ -12,12 +12,12 @@ class CodeProfiler:
     def results_from_func(self, func, data, metric=EXECUTION_TIME, verbose=False):
         """Metric and verbose are only used for printing purposes"""
         data_copy = data
-        start_time = perf_counter()
         mem_usage_before = memory_usage(-1, interval=0.1, timeout=1)[0]
+        start_time = time_counter()
         result = func(data_copy)
+        end_time = time_counter()
         mem_usage_after = memory_usage(-1, interval=0.1, timeout=1)[0]
-        end_time = perf_counter()
-
+        
         response = {
             RESULT: result,
             EXECUTION_TIME: end_time - start_time,
@@ -27,7 +27,6 @@ class CodeProfiler:
         if verbose:
             print(response[metric])
         return response
-
 
     def compare_functions(self, func1, func2, data, metric, num_iterations, verbose=False):
         results_1 = self.metrics_from(func1, data, num_iterations, metric, verbose)
