@@ -1,0 +1,6 @@
+[tool.pytest.ini_options]
+addopts = "--ignore=env --ignore=__pycache__ --ignore=.ropeproject --ignore=.pytest_cache"
+
+testpaths = [
+    "test_profiler.py"
+]
