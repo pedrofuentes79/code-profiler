@@ -11,7 +11,7 @@ class CodeProfiler:
     
     def results_from_func(self, func, data, metric=EXECUTION_TIME, verbose=False):
         """Metric and verbose are only used for printing purposes"""
-        data_copy = data
+        data_copy = data.copy(deep=False)
         mem_usage_before = memory_usage(-1, interval=0.1, timeout=1)[0]
         start_time = time_counter()
         result = func(data_copy)
