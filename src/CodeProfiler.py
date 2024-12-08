@@ -9,7 +9,7 @@ pd.options.mode.copy_on_write = True
 
 class CodeProfiler:
     
-    def results_from_func(self, func, data, metric=EXECUTION_TIME, verbose=False):
+    def results_from(self, func, data, metric=EXECUTION_TIME, verbose=False):
         """Metric and verbose are only used for printing purposes"""
         data_copy = data.copy(deep=False)
         mem_usage_before = memory_usage(-1, interval=0.1, timeout=1)[0]
@@ -37,7 +37,7 @@ class CodeProfiler:
         return np.mean([res1[metric] for res1 in results_1]) < np.mean([res2[metric] for res2 in results_2])
   
     def metrics_from(self, func1, data, num_iterations, metric, verbose):
-        return [self.results_from_func(func1, data, metric, verbose) for _ in range(num_iterations)]
+        return [self.results_from(func1, data, metric, verbose) for _ in range(num_iterations)]
  
     def is_more_memory_efficient_than(self, func1, func2, data, verbose=False, num_iterations=1):
         return self.compare_functions(func1, func2, data, MEMORY_USAGE, num_iterations, verbose)
